@@ -4,6 +4,7 @@ import 'package:admin_fresh_cart/screen/all_shop_products.dart'
 import 'package:admin_fresh_cart/screen/all_shops.dart';
 import 'package:admin_fresh_cart/screen/request_approve.dart';
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
@@ -21,33 +22,40 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     AdminAllShopsScreen(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBackgroundColor,
       body: screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        selectedItemColor: kPrimaryColor,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.production_quantity_limits),
-            label: 'All Products',
+
+      bottomNavigationBar: CurvedNavigationBar(
+        height: 55,
+        index: _selectedIndex,
+        backgroundColor: Colors.transparent,
+        color: Colors.green, // Bar color
+        buttonBackgroundColor: kPrimaryColor, // Highlighted bubble
+        animationDuration: const Duration(milliseconds: 400),
+
+        items: [
+          Icon(
+            Icons.production_quantity_limits,
+            size: 28,
+            color: _selectedIndex == 0 ? Colors.white : Colors.black,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_add),
-            label: 'Requests',
+          Icon(
+            Icons.person_add,
+            size: 28,
+            color: _selectedIndex == 1 ? Colors.white : Colors.black,
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Shops'),
+          Icon(
+            Icons.store,
+            size: 28,
+            color: _selectedIndex == 2 ? Colors.white : Colors.black,
+          ),
         ],
+
+        onTap: (index) {
+          setState(() => _selectedIndex = index);
+        },
       ),
     );
   }
